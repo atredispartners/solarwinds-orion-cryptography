@@ -54,31 +54,4 @@ $stdout.puts "User '#{username}' with password '#{password}' has hash '#{sha512}
       }
       return result;
     }
-
-    # .NET Core PBKDF2
-    public Rfc2898DeriveBytes(byte[] password, byte[] salt, int iterations, HashAlgorithmName hashAlgorithm)
-    {
-      this.m_cspParams = new CspParameters();
-      base..ctor();
-      if (string.IsNullOrEmpty(hashAlgorithm.Name))
-      {
-        throw new ArgumentException(Environment.GetResourceString("Cryptography_HashAlgorithmNameNullOrEmpty"), "hashAlgorithm");
-      }
-      HMAC hmac = HMAC.Create("HMAC" + hashAlgorithm.Name);
-      if (hmac == null)
-      {
-        throw new CryptographicException(Environment.GetResourceString("Cryptography_UnknownHashAlgorithm", new object[]
-        {
-          hashAlgorithm.Name
-        }));
-      }
-      this.Salt = salt;
-      this.IterationCount = iterations;
-      this.m_password = password;
-      hmac.Key = password;
-      this.m_hmac = hmac;
-      this.m_blockSize = hmac.HashSize >> 3;
-      this.Initialize();
-    }
-
 =end
